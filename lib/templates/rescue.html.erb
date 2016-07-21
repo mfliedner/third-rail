@@ -1,0 +1,70 @@
+<head>
+  <style>
+
+  html, section, article, h1, h2, p {
+    background: #F8F8F8;
+    font-family: sans-serif;
+    text-align: center;
+  }
+
+  body {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  h1 {
+    background: red;
+    color: white;
+    font-size: 40px;
+    padding: 24px;
+    top: 0;
+  }
+
+  .block {
+    background: #E0E0E0;
+    display: block;
+    font-family: monospace;
+    margin: 0px 200px 0px 200px;
+    padding: 0px;
+    text-align: left;
+  }
+
+  strong {
+    display: block;
+    background: pink;
+  }
+  </style>
+</head>
+
+<body>
+
+<h1>Exceptions</h1>
+
+</body>
+
+<h2>Exception Message</h2>
+  <p class="block"><%= exception_msg %></p>
+
+<br>
+
+<hr>
+
+<h2>Stack Trace</h2>
+  <% stack_trace.each do |msg| %>
+    <p class="block">
+    <%= msg %>
+    </p>
+  <% end %>
+
+<br>
+
+<hr>
+
+<h2>Source Code Preview</h2>
+  <% source_code.each_with_index do |msg, i| %>
+    <p class="block">
+    <%= "<strong>" if i == 3 %>
+    <%= msg %>
+    <%= "</strong>" if i == 3 %>
+    </p>
+  <% end %>
