@@ -1,70 +1,75 @@
-<head>
-  <style>
+  <head>
+    <style>
 
-  html, section, article, h1, h2, p {
-    background: #F8F8F8;
-    font-family: sans-serif;
-    text-align: center;
-  }
+      html, section, article, h1, h2, p {
+        background: #ccc;
+        font-family: sans-serif;
+        text-align: center;
+      }
 
-  body {
-    margin: 0px;
-    padding: 0px;
-  }
+      body {
+        margin: 0px;
+        padding: 0px;
+        margin-bottom: 24px;
+      }
 
-  h1 {
-    background: red;
-    color: white;
-    font-size: 40px;
-    padding: 24px;
-    top: 0;
-  }
+      h1 {
+        background: red;
+        color: white;
+        font-size: 40px;
+        padding: 24px;
+        top: 0;
+      }
 
-  .block {
-    background: #E0E0E0;
-    display: block;
-    font-family: monospace;
-    margin: 0px 200px 0px 200px;
-    padding: 0px;
-    text-align: left;
-  }
+      .block {
+        background: #eee;
+        display: block;
+        font-family: monospace;
+        margin: 0px 100px 0px 100px;
+        padding: 0px;
+        text-align: left;
+      }
 
-  strong {
-    display: block;
-    background: pink;
-  }
-  </style>
-</head>
+      strong {
+        display: block;
+        background: pink;
+      }
+    </style>
+  </head>
 
-<body>
+  <body>
 
-<h1>Exceptions</h1>
+    <h1>Exception Log</h1>
 
-</body>
+    </body>
 
-<h2>Exception Message</h2>
-  <p class="block"><%= exception_msg %></p>
+    <h2>Exception Message</h2>
+      <p class="block"><%= exception_message %></p>
 
-<br>
+    <br>
 
-<hr>
+    <hr>
 
-<h2>Stack Trace</h2>
-  <% stack_trace.each do |msg| %>
-    <p class="block">
-    <%= msg %>
-    </p>
-  <% end %>
+    <h2>Source View</h2>
+      <h3><%= source_file_name %></h3>
+      <% source_view.each do |line| %>
+      <% line_number = /\d+/.match(line).to_s.to_i %>
+        <p class="block">
+        <%= "<strong>" if line_number == exception_line_number %>
+        <%= line %>
+        <%= "</strong>" if line_number == exception_line_number %>
+        </p>
+      <% end %>
 
-<br>
+    <br>
 
-<hr>
+    <hr>
 
-<h2>Source Code Preview</h2>
-  <% source_code.each_with_index do |msg, i| %>
-    <p class="block">
-    <%= "<strong>" if i == 3 %>
-    <%= msg %>
-    <%= "</strong>" if i == 3 %>
-    </p>
-  <% end %>
+    <h2>Stack Trace</h2>
+      <% stack_trace.each do |msg| %>
+        <p class="block last">
+        <%= ERB::Util.html_escape(msg) %>
+        </p>
+      <% end %>
+
+  </body>
