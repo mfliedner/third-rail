@@ -1,3 +1,4 @@
+require_relative 'db_connection'
 require_relative 'associatable'
 require_relative 'searchable'
 require 'active_support/inflector'
@@ -8,23 +9,11 @@ class SQLObject
   extend Searchable
   extend Associatable
 
-  # connect to database
-  def self.db
-    @@db
-  end
-
-  def self.db=(db)
-    @@db = db
-    @@db.results_as_hash = true
-    @@db.type_translation = true
-    @@db
-  end
-
   # returns the columns as symbols from the corresponding database table
   def self.columns
     unless @columns
       table = self.table_name
-      query = @@db.execute2(<<-SQL)
+      query = DBConnection.execute2(<<-SQL)
         SELECT
           *
         FROM
@@ -64,7 +53,7 @@ class SQLObject
   # fetches all the records from the database
   def self.all
     table = self.table_name
-    query = @@db.execute(<<-SQL)
+    query = DBConnection.execute(<<-SQL)
       SELECT
         *
       FROM
@@ -81,7 +70,7 @@ class SQLObject
   # finds a single record object based on its :id
   def self.find(id)
     table = self.table_name
-    query = @@db.execute(<<-SQL, id)
+    query = DBConnection.execute(<<-SQL, id)
       SELECT
         *
       FROM
@@ -129,13 +118,13 @@ class SQLObject
     question_marks = "(#{(["?"] * n).join(", ")})"
     table = self.class.table_name
     insert_into = "#{table} (#{col_names})"
-    query = @@db.execute(<<-SQL, *vals)
+    query = DBConnection.execute(<<-SQL, *vals)
       INSERT INTO
         #{insert_into}
       VALUES
         #{question_marks}
     SQL
-    self.id = @@db.instance.last_insert_row_id
+    self.id = DBConnection.instance.last_insert_row_id
   end
 
   # updates attributes of an existing database record
@@ -145,7 +134,7 @@ class SQLObject
     vals = attribute_values
     vals << self.id
     table = self.class.table_name
-    query = @@db.execute(<<-SQL, *vals)
+    query = DBConnection.execute(<<-SQL, *vals)
       UPDATE
         #{table}
       SET

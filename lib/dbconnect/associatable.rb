@@ -82,7 +82,7 @@ module Associatable
       source_fk = source.foreign_key
 
       key = self.send(through_fk)
-      query = self.db.execute(<<-SQL, key)
+      query = DBConnection.execute(<<-SQL, key)
         SELECT
           #{source_table}.*
         FROM

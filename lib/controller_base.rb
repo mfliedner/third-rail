@@ -75,7 +75,7 @@ class ControllerBase
     else
       form_authenticity_token
     end
-    
+
     self.send(name)
     self.render(name) unless already_built_response?
     nil
