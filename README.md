@@ -1,6 +1,6 @@
 # ThirdRail
 
-ThirdRail is a light-weight MVC implementation inspired by ActiveRecord and ActionController in Rails and is built on ActiveSupport.  It provides a router, exception handling, and a static asset server.  Rack middleware is used for HTML requests and responses.  `Rack::Builder` and `Rack::Server` are used in the demo tests to run simple apps built with ThirdRail through a WEBrick HTTP server on `localhost`.
+ThirdRail is a lightweight MVC implementation inspired by ActiveRecord and ActionController in Rails and is built on ActiveSupport.  It provides a router, exception handling, and a static asset server.  Rack middleware is used for HTML requests and responses.  `Rack::Builder` and `Rack::Server` are used in the demo tests to run simple apps built with ThirdRail through a WEBrick HTTP server on `localhost`.
 
 The `SQLObject` class represents "M" (Model) in MVC.  It implements the Object Relational Mapping pattern that allows the user to perform database operations without writing SQL queries.
 
